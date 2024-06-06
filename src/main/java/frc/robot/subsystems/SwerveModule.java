@@ -87,7 +87,7 @@ public class SwerveModule {
      * 
      * @return Position of the drive motor rotor in rotations.
      */
-    public double getDriveRotorPosition() { return this.inputs.driveRotorPosition; }
+    // public double getDriveRotorPosition() { return this.inputs.driveRotorPosition; }
 
     /**
      * Position of the device in motor rotations.  Converts device rotations to 
@@ -95,7 +95,7 @@ public class SwerveModule {
      * 
      * @return drive position of the module in radians
      */
-    public double getDrivePosition() { return this.inputs.drivePositionRad; }
+    public double getDrivePosition() { return this.inputs.drivePosition; }
 
     /**
      * 
@@ -111,7 +111,7 @@ public class SwerveModule {
      * @return drive velocity in meters per/sec
      */
     public double getDriveVelocity() {
-        return (this.inputs.driveVelocityRadPerSec / (2 * Math.PI)) * Constants.Drivetrain.wheelRadius;
+        return (this.inputs.driveVelocity / (2 * Math.PI)) * Constants.Drivetrain.wheelRadius;
     }
 
     /**
@@ -128,7 +128,7 @@ public class SwerveModule {
      * 
      * @return turn motor velocity in radians per/sec
      */
-    public double getTurnVelocity() { return this.inputs.turnVelocityRadPerSec; }
+    // public double getTurnVelocity() { return this.inputs.turnVelocityRadPerSec; }
 
     /**
      * Starts with the Absolute Position of the cancoder in rotations. using 

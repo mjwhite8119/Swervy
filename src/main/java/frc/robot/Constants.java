@@ -15,6 +15,11 @@ public class Constants {
 
 	public static Mode currentMode = Mode.SIM;
 
+	public static final double loopPeriodSecs = 0.02;
+
+	public static final double kWheelDiameterMeters = 0.07; // 70 mm
+	public static final double kCountsPerRevolution = 1440.0;
+
 	public static enum Mode {
 		/** Running on a real robot. */
 		REAL,

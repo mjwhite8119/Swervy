@@ -9,12 +9,10 @@ import frc.robot.commands.drivetrain.LockWheels;
 import frc.robot.oi.DriverOI;
 import frc.robot.subsystems.Drivetrain;
 import frc.robot.subsystems.GyroIO;
-import frc.robot.subsystems.GyroIOPigeon2;
-import frc.robot.subsystems.LockServo;
+import frc.robot.subsystems.GyroIORomiGyro;
 import frc.robot.subsystems.SwerveModule;
 import frc.robot.subsystems.ModuleIO;
-import frc.robot.subsystems.ModuleIOSim;
-import frc.robot.subsystems.ModuleIOTalonFX;
+import frc.robot.subsystems.ModuleIOSwervy;
 
 public class RobotContainer {
 
@@ -32,21 +30,12 @@ public class RobotContainer {
 		case REAL:
 			// Real robot, instantiate hardware IO implementations      
 			drivetrain = new Drivetrain(
-				new GyroIOPigeon2(),
-				new ModuleIOTalonFX(SwerveModule.Place.FrontLeft),
-				new ModuleIOTalonFX(SwerveModule.Place.FrontRight),
-				new ModuleIOTalonFX(SwerveModule.Place.BackLeft),
-				new ModuleIOTalonFX(SwerveModule.Place.BackRight)
+				new GyroIORomiGyro(),
+				new ModuleIOSwervy(SwerveModule.Place.FrontLeft),
+				new ModuleIOSwervy(SwerveModule.Place.FrontRight),
+				new ModuleIOSwervy(SwerveModule.Place.BackLeft),
+				new ModuleIOSwervy(SwerveModule.Place.BackRight)
 			);
-			break;
-
-		case SIM:
-			// Sim robot, instantiate physics sim IO implementations		
-			drivetrain = new Drivetrain(null, 
-						new ModuleIOSim(), 
-						new ModuleIOSim(), 
-						new ModuleIOSim(), 
-						new ModuleIOSim());
 			break;
 
 		default:

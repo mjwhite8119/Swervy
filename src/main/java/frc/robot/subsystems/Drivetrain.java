@@ -1,13 +1,11 @@
 package frc.robot.subsystems;
 
-import static edu.wpi.first.units.Units.*;
 import java.util.Arrays;
 
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -18,9 +16,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveModule.Place;
 import frc.robot.vision.Limelight;
@@ -35,8 +31,6 @@ public class Drivetrain extends SubsystemBase {
 	public final SwerveDriveOdometry pose;
 	public final SwerveDrivePoseEstimator poseEstimator;
 	public final Limelight limelight = new Limelight("limelight");
-
-	private final SysIdRoutine sysId;
 	
 	// ----------------------------------------------------------
     // Initialization
@@ -48,7 +42,6 @@ public class Drivetrain extends SubsystemBase {
 		ModuleIO blModuleIO,
 		ModuleIO brModuleIO) 
   	{	
-		if (gyroIO == null) gyroIO = new GyroIOSim(this);
 		this.gyroIO = gyroIO;
 		modules[0] = new SwerveModule(flModuleIO, Place.FrontLeft);
 		modules[1] = new SwerveModule(frModuleIO, Place.FrontRight);
@@ -66,23 +59,6 @@ public class Drivetrain extends SubsystemBase {
 										this.getModulePositions(),
 										new Pose2d()
 										);
-
-		// Configure SysId
-		sysId =
-        new SysIdRoutine(
-            new SysIdRoutine.Config(
-                null,
-                null,
-                null,
-                (state) -> Logger.recordOutput("Drive/SysIdState", state.toString())),
-            new SysIdRoutine.Mechanism(
-                (voltage) -> {
-                  for (int i = 0; i < 4; i++) {
-                    modules[i].runCharacterization(voltage.in(Volts));
-                  }
-                },
-                null,
-                this));
 	}
 
 	// ----------------------------------------------------------
@@ -163,12 +139,13 @@ public class Drivetrain extends SubsystemBase {
 	 */
 	@AutoLogOutput(key = "Robot/Rotation")
 	public Rotation2d getRobotAngle() {
-		return this.gyroInputs.yawPosition;	
+		// return this.gyroInputs.yawPosition;	
+		return gyroInputs.heading;
 	}
 
-	public double getAngularVelocity() {
-		return gyroInputs.yawVelocityRadPerSec;
-    }
+	// public double getAngularVelocity() {
+	// 	return gyroInputs.yawVelocityRadPerSec;
+    // }
 
 	public SwerveModule[] getSwerveModules() {return this.modules;}
 
@@ -268,27 +245,6 @@ public class Drivetrain extends SubsystemBase {
 
 		// Fuse odometry pose with vision data if we have it.
 		updatePoseEstimatorWithVision();
-	}
-
-	/** Returns a command to run a quasistatic test in the specified direction. */
-	public Command sysIdQuasistatic(SysIdRoutine.Direction direction) {
-		return sysId.quasistatic(direction);
-	}
-
-	/** Returns a command to run a dynamic test in the specified direction. */
-	public Command sysIdDynamic(SysIdRoutine.Direction direction) {
-		return sysId.dynamic(direction);
-	}
-	  
-	// ----------------------------------------------------------
-    // Simulation
-    // ----------------------------------------------------------
-	public boolean getHasValidTargetsSim() {
-		double heading = this.getPoseEstimation().getRotation().getDegrees();
-
-		// if(DriverStation.getAlliance() == DriverStation.Alliance.Red) return heading < 75 || heading > -75;
-		// else 
-		return heading > 135 || heading < -135;
 	}
 
 }

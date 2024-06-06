@@ -1,35 +1,25 @@
-// Copyright 2021-2024 FRC 6328
-// http://github.com/Mechanical-Advantage
-//
-// This program is free software; you can redistribute it and/or
-// modify it under the terms of the GNU General Public License
-// version 3 as published by the Free Software Foundation or
-// available in the root directory of this project.
-//
-// This program is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-// GNU General Public License for more details.
-
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import frc.robot.Constants;
-
 import org.littletonrobotics.junction.AutoLog;
 
-import com.ctre.phoenix6.hardware.Pigeon2;
 
+/**
+ * Connects the software to the hardware and directly receives data from the gyroscope.
+ */
 public interface GyroIO {
-  @AutoLog
-  public static class GyroIOInputs {
-    public boolean connected = false;
-    public Rotation2d yawPosition = new Rotation2d();
-    public double yawVelocityRadPerSec = 0.0;
-    public Rotation2d heading = new Rotation2d();
-  }
 
+    /** Contains all of the input data received from hardware. */
+    @AutoLog
+    public static class GyroIOInputs {
+      public Rotation2d heading = new Rotation2d();
+    }
 
-  public default void updateInputs(GyroIOInputs inputs) {}
-  public default void resetGyro(){}
+    /**
+     * Reads information from sources (hardware or simulation) and updates the inputs object.
+     *
+     * @param inputs Contains the defaults for the input values listed above.
+     */
+    default void updateInputs(GyroIOInputs inputs) {}
+    public default void resetGyro(){}
 }

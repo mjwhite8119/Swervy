@@ -21,18 +21,6 @@ public final class AutonomousRoutines {
 
 		chooser.addOption("Drive test trajectory", new SequentialCommandGroup(runTrajectory("test", drivetrain)));
 
-		// Set up SysId routines
-		chooser.addOption(
-			"Drive SysId (Quasistatic Forward)",
-			drivetrain.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-		chooser.addOption(
-			"Drive SysId (Quasistatic Reverse)",
-			drivetrain.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-		chooser.addOption(
-			"Drive SysId (Dynamic Forward)", drivetrain.sysIdDynamic(SysIdRoutine.Direction.kForward));
-		chooser.addOption(
-			"Drive SysId (Dynamic Reverse)", drivetrain.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-   
 		return chooser;
 	}
 
