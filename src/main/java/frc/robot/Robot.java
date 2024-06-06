@@ -31,17 +31,7 @@ public class Robot extends LoggedRobot {
 	public void robotInit() {
 		ConduitApi.getInstance().configurePowerDistribution(Constants.CAN.pdh, ModuleType.kRev.value);
 
-		if(Robot.isReal()){
-			Constants.currentMode = Constants.Mode.REAL;
-		}
-
 		switch(Constants.currentMode) {
-		case REAL:
-			// Running on a real robot, log to a USB stick
-			Logger.addDataReceiver(new WPILOGWriter("/U"));
-			Logger.addDataReceiver(new NT4Publisher());
-			break;
-
 		case SIM:
 			// Running a physics simulator, log to NT
 			Logger.addDataReceiver(new NT4Publisher());

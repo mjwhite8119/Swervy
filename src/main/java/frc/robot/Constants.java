@@ -13,6 +13,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 public class Constants {
 	private Constants() { throw new IllegalCallerException("Cannot instantiate `Constants`"); }
 
+	// AdvantageKit mode
 	public static Mode currentMode = Mode.SIM;
 
 	public static final double loopPeriodSecs = 0.02;
@@ -22,7 +23,7 @@ public class Constants {
 
 	public static enum Mode {
 		/** Running on a real robot. */
-		REAL,
+		// REAL,
 
 		/** Running a physics simulator. */
 		SIM,

@@ -27,7 +27,8 @@ public class RobotContainer {
 	public RobotContainer() {
 
 		switch(Constants.currentMode) {
-		case REAL:
+		// Only SIM mode for the Swervy training robot
+		case SIM:
 			// Real robot, instantiate hardware IO implementations      
 			drivetrain = new Drivetrain(
 				new GyroIORomiGyro(),
