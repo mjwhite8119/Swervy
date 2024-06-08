@@ -12,12 +12,12 @@ public abstract class BaseOI {
 	 * C-Stop, the most useful command you'll ever have
 	 * Press this magical button (start/left "window" button) to stop *all running commands*
 	 */
-	public final Trigger cstop;
+	// public final Trigger cstop;
 
 	protected BaseOI(final CommandXboxController controller) {
 		this.controller = controller;
 		this.hid = controller.getHID();
 
-		this.cstop = this.controller.start();
+		// this.cstop = this.controller.start();
 	}
 }

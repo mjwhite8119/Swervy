@@ -19,10 +19,8 @@ public class RobotContainer {
 	public final LoggedDashboardChooser<Command> autonomousChooser;
 
 	public final DriverOI driverOI = new DriverOI(new CommandXboxController(0));
-	// public final OperatorOI operatorOI = new OperatorOI(new CommandXboxController(1));
-
+	
 	public final Drivetrain drivetrain;
-	// private final LockServo servo = new LockServo(0); // PWM channel
 
 	public RobotContainer() {
 
@@ -57,11 +55,8 @@ public class RobotContainer {
 	}
 
 	private void configureDriverControls() {
-		this.driverOI.resetFOD.whileTrue(new RunCommand(() -> this.drivetrain.resetGyro())); // Y Button
-		this.driverOI.lock.whileTrue(new LockWheels(this.drivetrain, this.driverOI)); // Left Bumper
-		
-		// this.driverOI.servoLeft.whileTrue(new RunCommand(() -> this.servo.incrementServo(1)));
-		// this.driverOI.servoRight.whileTrue(new RunCommand(() -> this.servo.incrementServo(-1)));
+		// this.driverOI.resetFOD.whileTrue(new RunCommand(() -> this.drivetrain.resetGyro())); // Y Button
+		// this.driverOI.lock.whileTrue(new LockWheels(this.drivetrain, this.driverOI)); // Left Bumper
 	}
 
 	public void teleop() { this.drivetrain.setDefaultCommand(new JoystickDrive(this.drivetrain, this.driverOI)); }

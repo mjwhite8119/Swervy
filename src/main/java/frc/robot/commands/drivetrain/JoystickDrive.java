@@ -41,18 +41,9 @@ public class JoystickDrive extends Command {
 		Translation2d linearVelocity;
 		double omegaRadPerSec = 0;
 
-		// Check if we're aligning the shooter with the target (rightTriggerAxis)
-		double alignTriggerValue = MathUtil.applyDeadband(this.oi.alignShooter.get(), 0.1);
-		SmartDashboard.putNumber("JoystickDrive/alignTriggerValue", alignTriggerValue);
-
-		if (alignTriggerValue > 0) {
-			// Align robot with target	
-			linearVelocity = getAlignTarget();
-		} else {
-			// 1. CONVERT JOYSTICK VALUES
-			linearVelocity = getLinearVelocity(mul); // Meters per/sec
-			omegaRadPerSec = getOmega(mul); // Radians per/sec		
-		}	
+		// 1. CONVERT JOYSTICK VALUES
+		linearVelocity = getLinearVelocity(mul); // Meters per/sec
+		omegaRadPerSec = getOmega(mul); // Radians per/sec		
 
 		// 2 CONVERT TO CHASSIS SPEEDS	
 		ChassisSpeeds desired = new ChassisSpeeds(linearVelocity.getX(), linearVelocity.getY(), omegaRadPerSec);
@@ -153,25 +144,4 @@ public class JoystickDrive extends Command {
 		return omegaRadiansPerSecond;
 	}
 
-	/**
-	 * Control the robot based on range from target
-	 * 
-	 * @return The required X and Y translation
-	 */
-	private Translation2d getAlignTarget() {
-
-		double measurement = this.drivetrain.limelight.getTargetVerticalOffset();
-		double xSpeed = this.targetVerticalController.calculate(measurement, 0);
-		// xSpeed should end up between -1 and 1
-		SmartDashboard.putNumber("JoystickDrive/Target align xSpeed", xSpeed);
-		xSpeed = MathUtil.clamp(xSpeed, 0, 1); // Make it a unit value?
-
-		double ySpeed = 0;
-		double vxMetersPerSecond = xSpeed * Constants.Drivetrain.maxVelocityMetersPerSec;
-		double vyMetersPerSecond = ySpeed * Constants.Drivetrain.maxVelocityMetersPerSec;
-		SmartDashboard.putNumber("JoystickDrive/Align Target X", vxMetersPerSecond);
-		SmartDashboard.putNumber("JoystickDrive/Align Target Y", vyMetersPerSecond);
-
-		return new Translation2d(vxMetersPerSecond, vyMetersPerSecond);
-	}
 }

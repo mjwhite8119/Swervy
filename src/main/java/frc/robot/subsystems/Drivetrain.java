@@ -13,13 +13,10 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.SwerveModule.Place;
-import frc.robot.vision.Limelight;
 
 public class Drivetrain extends SubsystemBase {
 	private final GyroIO gyroIO;
@@ -30,7 +27,6 @@ public class Drivetrain extends SubsystemBase {
 	// Used to track odometry
 	public final SwerveDriveOdometry pose;
 	public final SwerveDrivePoseEstimator poseEstimator;
-	public final Limelight limelight = new Limelight("limelight");
 	
 	// ----------------------------------------------------------
     // Initialization
@@ -151,10 +147,6 @@ public class Drivetrain extends SubsystemBase {
 
 	public SwerveDriveKinematics getKinematics() {return this.kinematics;}
 
-	public double getTargetRange() {
-		return this.limelight.getTargetVerticalOffset();
-	}
-
 	// ----------------------------------------------------------
     // Odometry
     // ----------------------------------------------------------
@@ -198,22 +190,6 @@ public class Drivetrain extends SubsystemBase {
 		return Arrays.stream(this.modules).map(SwerveModule::getModuleState).toArray(SwerveModuleState[]::new);
 	}
 
-	/**
-	 * Updates the pose with vision if close to current position.
-	 */
-	public void updatePoseEstimatorWithVision() {
-		if(this.limelight.hasValidTargets()) {
-			// distance from current pose to vision estimated pose
-			double poseDifference = this.poseEstimator.getEstimatedPosition().getTranslation()
-				.getDistance(this.limelight.getPose2d().getTranslation());
-			SmartDashboard.putNumber("pose difference", poseDifference);
-
-			if (poseDifference < 0.5) {
-				this.poseEstimator.addVisionMeasurement(this.limelight.getPose2d(), Timer.getFPGATimestamp() - 0.3);
-			}
-		}
-	}
-
 	// ----------------------------------------------------------
     // Process Logic
     // ----------------------------------------------------------
@@ -225,26 +201,10 @@ public class Drivetrain extends SubsystemBase {
 		// Update the state of each swerve module
 		for(final SwerveModule module : this.modules)
 			module.update();
-
-		// Stop moving when disabled
-		if (DriverStation.isDisabled()) {
-			for (var module : modules) {
-				module.stop();
-			}
-		}
-
-		// Log empty setpoint states when disabled
-		if (DriverStation.isDisabled()) {
-			Logger.recordOutput("SwerveStates/Setpoints", new SwerveModuleState[] {});
-			Logger.recordOutput("SwerveStates/SetpointsOptimized", new SwerveModuleState[] {});		
-		}
 		
 		// Update the odometry pose
 		this.pose.update(getRobotAngle(), this.getModulePositions());
 		this.poseEstimator.update(getRobotAngle(), this.getModulePositions());
-
-		// Fuse odometry pose with vision data if we have it.
-		updatePoseEstimatorWithVision();
 	}
 
 }

@@ -29,8 +29,7 @@ public class Robot extends LoggedRobot {
 
 	@Override
 	public void robotInit() {
-		ConduitApi.getInstance().configurePowerDistribution(Constants.CAN.pdh, ModuleType.kRev.value);
-
+		
 		switch(Constants.currentMode) {
 		case SIM:
 			// Running a physics simulator, log to NT

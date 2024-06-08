@@ -17,13 +17,13 @@ public class DriverOI extends BaseOI {
 		this.moveRotationY = () -> this.hid.getRawAxis(3);
 		
 		// this.slow = this.controller::getRightTriggerAxis;
-		this.alignShooter = this.controller::getRightTriggerAxis;
+		// this.alignShooter = this.controller::getRightTriggerAxis;
 
-		this.lock = this.controller.leftBumper();
+		// this.lock = this.controller.leftBumper();
 
-		this.resetFOD = this.controller.y();
-		this.servoLeft = this.controller.a();
-		this.servoRight = this.controller.b();
+		// this.resetFOD = this.controller.y();
+		// this.servoLeft = this.controller.a();
+		// this.servoRight = this.controller.b();
 	}
 
 	public final Supplier<Double> moveAxial;
@@ -35,11 +35,11 @@ public class DriverOI extends BaseOI {
 	public final Supplier<Double> moveRotationY;
 
 	// public final Supplier<Double> slow;
-	public final Supplier<Double> alignShooter;
+	// public final Supplier<Double> alignShooter;
 
-	public final Trigger lock;
-	public final Trigger servoLeft;
-	public final Trigger servoRight;
+	// public final Trigger lock;
+	// public final Trigger servoLeft;
+	// public final Trigger servoRight;
 
-	public final Trigger resetFOD;
+	// public final Trigger resetFOD;
 }

@@ -70,34 +70,34 @@ public class ModuleIOSwervy implements ModuleIO {
   public ModuleIOSwervy(Place place) {
     switch(place) {
     case FrontLeft:
-      this.turnMotor = new Spark(1);
       this.driveMotor = new Spark(0);
-      this.driveEncoder = new Encoder(4, 5);
-      this.turnEncoder = new Encoder(6, 7);
+      this.turnMotor = new Spark(1);
+      this.driveEncoder = new Encoder(10, 11);
+      this.turnEncoder = new Encoder(12, 13);
       // this.cancoder = new CANcoder(Constants.CAN.swerveFrontdriveEncoder, "canivore");
       // this.absoluteEncoderOffset = Constants.CAN.swerveFrontLeftOffset; // MUST BE CALIBRATED
       break;
     case FrontRight:
-      this.turnMotor = new Spark(1);
-      this.driveMotor = new Spark(0);
-      this.driveEncoder = new Encoder(4, 5);
-      this.turnEncoder = new Encoder(6, 7);
+      this.driveMotor = new Spark(2);
+      this.turnMotor = new Spark(3);    
+      this.driveEncoder = new Encoder(14, 15);
+      this.turnEncoder = new Encoder(16, 17);
       // this.cancoder = new CANcoder(Constants.CAN.swerveFrontturnEncoder, "canivore");
       // this.absoluteEncoderOffset = Constants.CAN.swerveFrontRightOffset; // MUST BE CALIBRATED
       break;
     case BackRight:
-      this.turnMotor = new Spark(1);
-      this.driveMotor = new Spark(0);
-      this.driveEncoder = new Encoder(4, 5);
-      this.turnEncoder = new Encoder(6, 7);
+      this.driveMotor = new Spark(4);
+      this.turnMotor = new Spark(5);
+      this.driveEncoder = new Encoder(18, 19);
+      this.turnEncoder = new Encoder(20, 21);
       // this.cancoder = new CANcoder(Constants.CAN.swerveBackturnEncoder, "canivore");
       // this.absoluteEncoderOffset = Constants.CAN.swerveBackRightOffset;
       break;
     case BackLeft:
-      this.turnMotor = new Spark(1);
-      this.driveMotor = new Spark(0);
-      this.driveEncoder = new Encoder(4, 5);
-      this.turnEncoder = new Encoder(6, 7);
+      this.driveMotor = new Spark(6);
+      this.turnMotor = new Spark(7);    
+      this.driveEncoder = new Encoder(22, 23);
+      this.turnEncoder = new Encoder(24, 25);
       // this.cancoder = new CANcoder(Constants.CAN.swerveBackdriveEncoder, "canivore");
       // this.absoluteEncoderOffset = Constants.CAN.swerveBackLeftOffset;// MUST BE CALIBRATED
       break;
